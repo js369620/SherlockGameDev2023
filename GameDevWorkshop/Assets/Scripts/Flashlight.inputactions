@@ -1,0 +1,34 @@
+{
+    "name": "Flashlight",
+    "maps": [
+        {
+            "name": "Flashlight",
+            "id": "34bb93c6-9772-43ae-923a-8933a840a6e9",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "7f16cb5b-eba6-4a67-be28-60d025445000",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "86cfeded-f4bf-41d8-8151-a259f49b62eb",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
