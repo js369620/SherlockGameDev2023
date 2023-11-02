@@ -23,6 +23,12 @@ public class ShipPlayerController : MonoBehaviour
     public Camera cam;
     public Plane[] camFrustum;
 
+    //shootin' vars (bang bang)
+    private bool isShooting;
+    public GameObject bulletPrefab;
+    public Transform shootPoint; //we will be looking for a position which is under transform
+
+
     //debug vars
     public GameObject test_cube1, test_cube2, test_cube3, test_cube4;
 
@@ -42,12 +48,25 @@ public class ShipPlayerController : MonoBehaviour
 
         RotatePlayer(); 
         MovePlayer();
+        Shoot(isShooting, shootPoint); //requires args because we wrote this with params
         ScreenWrap();
     }
 
     public void GetMoveInput(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
+    }
+
+    public void GetShootInput(InputAction.CallbackContext context)
+    {
+        isShooting = true;
+
+        if (context.phase == InputActionPhase.Canceled)
+        {
+            //if we let up on the key, isShooting equals false
+            isShooting = false;
+
+        }
     }
 
     private void MovePlayer()
@@ -112,6 +131,25 @@ public class ShipPlayerController : MonoBehaviour
             distanceToCamera = cam.transform.position.x - transform.position.x;
             //positioning player based on distance
             transform.position = new Vector3(transform.position.x + (distanceToCamera * 2) - 1f, transform.position.y, transform.position.z); 
+        }
+    }
+
+    private void Shoot(bool shooting, Transform bulletSpawnPoint) //params, yay
+    {
+        //he started explaining what it does but i can't type for shit on this keyboard
+
+        if (shooting) //tracks keystrokes
+        { 
+            //instantiate a bullet, give it position and rotation
+            GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+
+            bullet.transform.forward = transform.forward;
+
+            //take the bullet's rigidbody and add force to it
+            bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * 20, ForceMode.Impulse); //you might want to change the 25 during testing
+
+            //"we want the bullet to have a certain amount of life and then DIE"
+            Destroy(bullet, 2.5f); //in seconds
         }
     }
 }
